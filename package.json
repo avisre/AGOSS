@@ -1,0 +1,26 @@
+{
+  "name": "user-auth-app",
+  "version": "1.0.0",
+  "description": "Basic user authentication app",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "are-we-there-yet": "^4.0.2",
+    "argon2": "^0.40.3",
+    "express": "^4.17.1",
+    "express-session": "^1.18.0",
+    "gauge": "^5.0.2",
+    "glob": "^11.0.0",
+    "mongoose": "^5.12.3",
+    "rimraf": "^6.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
