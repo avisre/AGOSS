@@ -7,12 +7,16 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const MONGO_URI = 'mongodb+srv://project:project@cluster0.kos1k7l.mongodb.net/tester';
+const MONGO_URI = 'mongodb+srv://project:project@cluster0.kos1k7l.mongodb.net/tester?retryWrites=true&w=majority';
 
-// Connect to MongoDB
-mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('MongoDB connected'))
-    .catch(err => console.log(err));
+// Connect to MongoDB with updated options to avoid deprecation warnings
+mongoose.connect(MONGO_URI, { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true,
+    useCreateIndex: true, // Use createIndex to avoid deprecated ensureIndex
+})
+.then(() => console.log('MongoDB connected'))
+.catch(err => console.log(err));
 
 // Define User model
 const userSchema = new mongoose.Schema({
@@ -22,7 +26,6 @@ const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     institution: { type: String, required: true }
 });
-
 
 const User = mongoose.model('User', userSchema);
 
@@ -48,7 +51,6 @@ app.post('/api/register', async (req, res) => {
         res.status(500).json({ message: 'Error registering user' });
     }
 });
-
 
 app.post('/api/login', async (req, res) => {
     try {
